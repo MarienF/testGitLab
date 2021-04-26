@@ -91,6 +91,7 @@ if (Meteor.isServer) {
           userId,
         });
 
+
         assert.equal(TasksCollection.find().count(), 4);
 
         mockMethodCall('tasks.removeAll', {context: {userId}});
