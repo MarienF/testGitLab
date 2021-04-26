@@ -76,19 +76,19 @@ if (Meteor.isServer) {
         TasksCollection.insert({
           text: 'Test Task 2',
           createdAt: new Date(),
-          userid,
+          userId,
         });
 
         TasksCollection.insert({
           text: 'Test Task 3',
           createdAt: new Date(),
-          userid,
+          userId,
         });
 
         TasksCollection.insert({
           text: 'Test Task 4',
           createdAt: new Date(),
-          userid,
+          userId,
         });
 
         assert.equal(TasksCollection.find().count(), 4);
