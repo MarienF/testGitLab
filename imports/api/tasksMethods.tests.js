@@ -34,9 +34,9 @@ if (Meteor.isServer) {
 
       it(`can't delete task from another owner`, () => {
         const fn = () =>
-          mockMethodCall('tasks.remove', taskId, {
-            context: { userId: 'somebody-else-id' },
-          });
+            mockMethodCall('tasks.remove', taskId, {
+              context: { userId: 'somebody-else-id' },
+            });
         assert.throw(fn, /Access denied/);
         assert.equal(TasksCollection.find().count(), 1);
       });
@@ -61,44 +61,6 @@ if (Meteor.isServer) {
         assert.equal(tasks.length, 2);
         assert.isTrue(tasks.some(task => task.text === text));
       });
-
-      it('can\'t insert task without an user authenticated', () => {
-        const text = 'New Task';
-        const fn = () => mockMethodCall('tasks.insert', text, {
-          context: { undefined },
-        });
-        assert.throw(fn, /Not authorized/);
-        assert.equal(TasksCollection.find().count(), 1);
-      });
-
-      it('can remove all owned tasks', ()=> {
-
-        TasksCollection.insert({
-          text: 'Test Task 2',
-          createdAt: new Date(),
-          userId,
-        });
-
-        TasksCollection.insert({
-          text: 'Test Task 3',
-          createdAt: new Date(),
-          userId,
-        });
-
-        TasksCollection.insert({
-          text: 'Test Task 4',
-          createdAt: new Date(),
-          userId,
-        });
-
-
-        assert.equal(TasksCollection.find().count(), 4);
-
-        mockMethodCall('tasks.removeAll', {context: {userId}});
-
-        assert.equal(TasksCollection.find().count(), 1);
-
-      })
     });
   });
 }
